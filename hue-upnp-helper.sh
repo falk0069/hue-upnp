@@ -21,11 +21,20 @@ if [ "$1" == "$DEVICE1" ]; then
   #ON/OFF Directive
   if [ "$2" == "on" ]; then
     if [ "$3" == "true" ]; then
-      echo 1 on true
+      echo $DEVICE1 on true
       #INSERTING WAKEONLAN
-      wakeonlan 11:22:33:44:55:66
+      if [[ -n $WOLMAC ]]; then
+        wakeonlan $WOLMAC
+      else
+        echo ERROR: Set \$WOLMAC to start your device via wakeonlan.
+      fi
     elif [ "$3" == "false" ]; then
-      echo 1 on false
+      echo $DEVICE1 on false
+      if [[ -n $WOLUSER && -n $WOLHOST ]]; then
+        ssh ${WOLUSER}@${WOLHOST} shutdown -h now & 
+      else
+        echo ERROR: Set \$WOLUSER and \$WOLHOST to shutdown your device via ssh.
+      fi
     fi
 
   #BRIGHTNESS

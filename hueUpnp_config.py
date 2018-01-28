@@ -1,7 +1,9 @@
+import os
+
 # Some Global Variables
 standard = {
     #Start with a '-d' to force debug mode
-    'DEBUG': True,
+    'DEBUG': bool(os.environ.get("DEBUG", False)),
     #Standard Broadcast IP UPNP
     'BCAST_IP': "239.255.255.250",
     #Standard UPNP Port
@@ -9,7 +11,7 @@ standard = {
     # Seconds between upnp broadcast
     'BROADCAST_INTERVAL': 200,
     # Callback http webserver IP (this machine)
-    'IP': "192.168.1.200",
+    'IP': os.environ.get("IP", "192.168.1.200"),
     # HTTP-port to serve icons, xml, json (80 is most compatible but requires root)
     'HTTP_PORT': 8080,
     # shouldn't matter but feel free to adjust
