@@ -9,7 +9,9 @@ standard = {
     # Seconds between upnp broadcast
     'BROADCAST_INTERVAL': 200,
     # Callback http webserver IP (this machine)
-    'IP': "192.168.1.200",
+    #  - use 0.0.0.0 to listen on all interfaces
+    #'IP': "192.168.1.200",
+    'IP': "0.0.0.0",
     # HTTP-port to serve icons, xml, json (80 is most compatible but requires root)
     'HTTP_PORT': 8080,
     # shouldn't matter but feel free to adjust
