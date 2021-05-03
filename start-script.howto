@@ -45,6 +45,9 @@ touch /var/lock/hueUpnp
 case "$1" in
   start)
     echo "Starting hueUpnp"
+    #easiest way to make sure all dependencies are up.  
+    #Feel free to suggest a better solution. Could not make Required-Start work.
+    /usr/bin/sleep 15
     cd  $HUEUPNPDIR
     python hueUpnp.py > /var/log/hueUpnp.log 2>&1 &
     ;;
