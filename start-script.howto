@@ -1,22 +1,21 @@
 #!/bin/sh
 #
 # This is a very basic start script for Linux.  You will want to set up a log rotation if the
-# log gets too big.  Also if you restart, the log will get overwritten.  Another thing you 
-# may want to do is edit the python script and change DEBUG to INFO or ERROR to reduce the 
-# logging. 
+# log gets too big.  Also if you restart, the log will get overwritten.  Another thing you
+# may want to do is edit the python script and change DEBUG to INFO or ERROR to reduce the
+# logging.
 #
-# To use this, update the HUEUPNPDIR path below to the location that you placed code.
-# Then copy it to your /etc/init.d dir, set permissions, and link to rc dirs 
+# To use this, update the HUE variables below accordingly.
+# Then copy it to your /etc/init.d dir, set permissions, and link to rc dirs
 # e.g.
 # sudo cp start-script.howto /etc/init.d/hueUpnp
 # sudo chmod 755 /etc/init.d/hueUpnp
 # sudo update-rc.d hueUpnp defaults    #ubuntu command
 #
-# or if you prefer services:
+# Update 2016/02: Created a simple systemd script called hueUpnp.service if you prefer
 # sudo insserv hueUpnp    #ubuntu command
 # sudo /usr/lib/insserv/insserv hueUpnp  #run this instead if command not found
 #
-# Update 2016/02: Created a simple systemd script called hueUpnp.service if you prefer
 #
 # To start manually:
 # sudo /etc/init.d/hueUpnp start
@@ -24,7 +23,7 @@
 # sudo service hueUpnp start
 #
 # Log file: /var/log/hueUpnp.log
-# 
+#
 
 ### BEGIN INIT INFO
 # Provides:          HUE-Emulator
@@ -36,7 +35,13 @@
 # Description:       Phillips HUE Emluator for Logitech Harmony.
 ### END INIT INFO
 
+#UPDATE HUE VARIABLES:
+# HUEPYTHON: set to 'python' for os default, or force 'python2' or 'python3' if needed
+# HUEUPNPDIR: set to the directory where the script can be found
+# HUEUPNPSCRIPT: set the name of the script.  Python2 version is just called hueUpnp.py
+HUEPYTHON=python
 HUEUPNPDIR=/usr/share/hue-upnp
+HUEUPNPSCRIPT=hueUpnp3.py
 
 # Some things that run always
 touch /var/lock/hueUpnp
@@ -45,22 +50,22 @@ touch /var/lock/hueUpnp
 case "$1" in
   start)
     echo "Starting hueUpnp"
-    #easiest way to make sure all dependencies are up.  
+    #easiest way to make sure all dependencies are up.
     #Feel free to suggest a better solution. Could not make Required-Start work.
     /usr/bin/sleep 15
     cd  $HUEUPNPDIR
-    python hueUpnp.py > /var/log/hueUpnp.log 2>&1 &
+    $HUEPYTHON $HUEUPNPSCRIPT > /var/log/hueUpnp.log 2>&1 &
     ;;
   stop)
     echo "Stopping hueUpnp"
-    /usr/bin/pkill -f "hueUpnp.py"
+    /usr/bin/pkill -f "$HUEUPNPSCRIPT"
     ;;
   restart)
     echo "Stopping hueUpnp"
-    /usr/bin/pkill -f "hueUpnp.py"
+    /usr/bin/pkill -f "$HUEUPNPSCRIPT"
     echo "Starting hueUpnp"
     cd  $HUEUPNPDIR
-    python hueUpnp.py > /var/log/hueUpnp.log 2>&1 &
+    $HUEPYTHON $HUEUPNPSCRIPT > /var/log/hueUpnp.log 2>&1 &
     ;;
   *)
     echo "Usage: /etc/init.d/hueUpnp {start|stop|restart}"
