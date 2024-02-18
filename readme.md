@@ -45,3 +45,8 @@ Now supports the Amazon Echo as well (Thanks Jimboca)
 Dec 2015:
 Pulled in jimboca code which includes a nice json parser.  Also, moved everything configurable to a config file: hueUpnp_config.py.  Another note is the hue-upnp-helper.sh now expects the device name instead of the device number as the first parameter.
 
+***
+Feb 2024:
+Added a python3 version (hueUpnp3.py).  Ran the 2to3 conversion tool and had to add .decode() or .encode() anytime the socket was read from or written to.  Everything seems to continue to be working as expected for me.  I left the orginal version python2 in case something is broken or in case someone still needs it.  I highly doubt, though, anyone really needs a python2 version anymore.
+
+
