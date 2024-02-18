@@ -10,6 +10,8 @@ standard = {
     'BROADCAST_INTERVAL': 200,
     # Callback http webserver IP (this machine)
     #  - use 0.0.0.0 to listen on all interfaces
+    #  - note: using 0.0.0.0 is easy and works with Harimony and Alexa but technically
+    #  -   responds but with an invalid callback URL.  Try setting to real IP if things fail.
     #'IP': "192.168.1.200",
     'IP': "0.0.0.0",
     # HTTP-port to serve icons, xml, json (80 is most compatible but requires root)
