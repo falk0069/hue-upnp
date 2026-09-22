@@ -13,4 +13,4 @@ COPY hueUpnp_config.py hue-upnp-helper.sh hueUpnp.py wemo_control.sh /app/
 EXPOSE 8080
 VOLUME /app
 
-CMD python /app/hueUpnp.py
+CMD python3 /app/hueUpnp.py
